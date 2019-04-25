@@ -1,0 +1,11 @@
+name: sail_routing_dart
+
+description: A new dart package for sail routing.
+version: 0.0.1
+author: 
+homepage:
+
+dependencies:
+
+environment:
+  sdk: '>=1.0.0 <3.0.0'
