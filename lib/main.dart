@@ -1,7 +1,9 @@
 library sail_routing_dart;
 
+import './grapher.dart';
 import 'dart:math';
 
-class SailRoute {
-  String hello() => "Hello from the sail_routing DART lib";
+void main() {
+  RouteWriter rw = new RouteWriter();
+  rw.test_run();
 }
