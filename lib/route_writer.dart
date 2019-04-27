@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:sail_routing_dart/cart_point.dart';
+import 'package:sail_routing_dart/route_model.dart';
+
 class RouteWriter {
   writeToFile(
       {List<double> start,
@@ -14,7 +17,6 @@ class RouteWriter {
     fileContents.add({'end': end});
     fileContents.add({'wind_direction': wind_direction});
 
-    fileContents.add({'start': start});
     fileContents.add({'points': points});
 
     var myFile = new File('lib/plotter_data.json');
@@ -24,8 +26,27 @@ class RouteWriter {
     sink.close();
   }
 
+  writeToFileFromRouteModel({RouteModel route}) {
+    List fileContents = new List();
+    fileContents.add({'start': route.start.toList()});
+
+    fileContents.add({'end': route.end.toList()});
+    fileContents.add({'wind_direction': route.wind});
+
+    fileContents.add({
+      'points':
+          route.intermediate_points.map((Cart_Point p) => p.toList()).toList()
+    });
+
+    var myFile = new File('lib/plotter_data.json');
+
+    var sink = myFile.openWrite();
+    sink.write(json.encode(fileContents));
+    sink.close();
+  }
+
   run_python_plotter() {
-    print("about to run");
+    print("about to run python plotter");
 
     Process.run('lib/pretty_plotter.py', ['']).then((ProcessResult pr) {
       print(pr.exitCode);

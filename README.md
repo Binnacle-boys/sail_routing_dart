@@ -1,6 +1,6 @@
 
 ## Visualization ##
-#### String whoToBlame() => 'Daniel' ####
+#### String whoToBlame() => 'Daniel'; ####
 
 Dart doesn't have *any* good graphing package that isn't some extension or some js library like charts.js.
 My quick and dirty approach (because it's just for our internal use) is something that writes all the necessary info about a course to a file and a python script that reads that file and saves a graph. 
