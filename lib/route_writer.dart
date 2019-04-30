@@ -15,7 +15,7 @@ class RouteWriter {
     fileContents.add({'start': start});
 
     fileContents.add({'end': end});
-    fileContents.add({'wind_direction': wind_direction + pi / 2});
+    fileContents.add({'wind_direction': wind_direction});
 
     fileContents.add({'points': points});
 
@@ -31,7 +31,7 @@ class RouteWriter {
     fileContents.add({'start': route.start.toList()});
 
     fileContents.add({'end': route.end.toList()});
-    fileContents.add({'wind_direction': route.wind_radians + pi / 2});
+    fileContents.add({'wind_direction': route.wind_radians});
 
     fileContents.add({
       'points':
@@ -46,12 +46,10 @@ class RouteWriter {
   }
 
   run_python_plotter() {
-    print("about to run python plotter");
-
     Process.run('lib/pretty_plotter.py', ['']).then((ProcessResult pr) {
-      print(pr.exitCode);
-      print(pr.stdout);
-      print(pr.stderr);
+      if (pr.exitCode != 0) print(pr.exitCode);
+      if (pr.stdout != '') print(pr.stdout);
+      if (pr.stderr != '') print(pr.stderr);
     });
   }
 

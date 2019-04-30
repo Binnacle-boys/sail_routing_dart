@@ -9,6 +9,7 @@ import os
 import matplotlib.pyplot as plt
 import yaml
 from math import cos, sin
+import math
 import matplotlib
 
 matplotlib.use('Agg')
@@ -23,8 +24,8 @@ dataMap = yaml.safe_load(file)
 final_map = {}
 for d in dataMap:
     final_map.update(d)
-for k, v in final_map.items():
-    print(k, v)
+# for k, v in final_map.items():
+#     print(k, v)
 
 # Reorder the points with a list of x's and a list of y's
 allpoints = [final_map["start"]] + final_map["points"] + [final_map["end"]]
@@ -32,7 +33,7 @@ x_row_major = [p[0] for p in allpoints]
 y_row_major = [p[1] for p in allpoints]
 
 ax = plt.axes()
-wind_radians = final_map["wind_direction"]
+wind_radians = float(final_map["wind_direction"]) + math.pi
 wind_label = "Wind: " + '%.3f' % final_map["wind_direction"] + " radians"
 # Where the start of the wind arrow is drawn (top center)
 wind_origin = (max(x_row_major)//2, max(y_row_major)*.85)
