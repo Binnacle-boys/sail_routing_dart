@@ -2,10 +2,13 @@ name: sail_routing_dart
 
 description: A new dart package for sail routing.
 version: 0.0.1
-author: 
+author: Casey Hillers, Nicholas Kalscheuer, Daniel Richards, Donovan Rost
 homepage:
 
 dependencies:
+    test: ^1.6.2
+    csv: ^4.0.3
+    args: ^1.5.1
 
 environment:
   sdk: '>=1.0.0 <3.0.0'

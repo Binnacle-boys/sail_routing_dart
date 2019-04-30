@@ -1,6 +1,6 @@
 library sail_routing_dart;
 
-import './grapher.dart';
+import 'package:sail_routing_dart/grapher.dart';
 import 'dart:math';
 
 void main() {
