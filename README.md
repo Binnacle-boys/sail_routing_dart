@@ -1,9 +1,19 @@
 
+## Single Tack Routing ##
+#### String whoToBlame() => 'Daniel'; ####
+Run the single tack implementation of the algorithm on a hard-coded route with:
+```bash
+dart lib/calc_route.dart -v
+```
+'v' flag is for verbose mode.
+The route will be displayed in `lib/plotted_course.png`
+
 ## Visualization ##
 #### String whoToBlame() => 'Daniel'; ####
 
 Dart doesn't have *any* good graphing package that isn't some extension or some js library like charts.js.
 My quick and dirty approach (because it's just for our internal use) is something that writes all the necessary info about a course to a file and a python script that reads that file and saves a graph. 
+
 So it goes Dart code --> plotter_data.json --> pretty_plotter.py --> plotted_course.png
 
 If you're in the code, do something like this:
