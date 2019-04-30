@@ -33,7 +33,7 @@ y_row_major = [p[1] for p in allpoints]
 
 ax = plt.axes()
 wind_radians = final_map["wind_direction"]
-wind_label = "Wind: " + str(final_map["wind_direction"]) + " radians"
+wind_label = "Wind: " + '%.3f' % final_map["wind_direction"] + " radians"
 # Where the start of the wind arrow is drawn (top center)
 wind_origin = (max(x_row_major)//2, max(y_row_major)*.85)
 
@@ -55,7 +55,8 @@ plt.scatter(final_map["end"][0], final_map["end"][1], s=50,
 plt.legend(loc='best')
 plt.xlabel('Lon')
 plt.ylabel('Lat')
-
+# make it a square
+ax.set_aspect('equal', 'box')
 # Save to a file, I hated having 20+ python windows open
 plt.savefig(dname+"/plotted_course")
 plt.close()

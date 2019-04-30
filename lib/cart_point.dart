@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Cart_Point {
   double _x;
   double _y;
@@ -15,5 +17,13 @@ class Cart_Point {
     output[0] = this._x;
     output[1] = this._y;
     return output;
+  }
+
+  Cart_Point.fromPoint(Point p) {
+    this._x = p.x;
+    this._y = p.y;
+  }
+  Point toPoint() {
+    return new Point(this._x, this._y);
   }
 }

@@ -15,7 +15,7 @@ class RouteWriter {
     fileContents.add({'start': start});
 
     fileContents.add({'end': end});
-    fileContents.add({'wind_direction': wind_direction});
+    fileContents.add({'wind_direction': wind_direction + pi / 2});
 
     fileContents.add({'points': points});
 
@@ -31,7 +31,7 @@ class RouteWriter {
     fileContents.add({'start': route.start.toList()});
 
     fileContents.add({'end': route.end.toList()});
-    fileContents.add({'wind_direction': route.wind});
+    fileContents.add({'wind_direction': route.wind_radians + pi / 2});
 
     fileContents.add({
       'points':
