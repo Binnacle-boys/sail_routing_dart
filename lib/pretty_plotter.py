@@ -44,18 +44,19 @@ ax.arrow(wind_origin[0], wind_origin[1], cos(wind_radians), sin(
 ax.annotate(wind_label, xy=wind_origin, color='b', backgroundcolor='w')
 
 # Draw line connecting all points
-plt.plot(x_row_major, y_row_major, color='k')
+plt.plot(x_row_major, y_row_major, color='k',
+         linestyle='dashed', linewidth=2, markersize=12)
 
 # Draw start and end points in green and red respsectively
-plt.scatter(final_map["start"][0], final_map["start"][1], s=50,
+plt.scatter(final_map["start"][0], final_map["start"][1], s=100,
             zorder=100, c='g', label="Start: " + str(final_map["start"]))
-plt.scatter(final_map["end"][0], final_map["end"][1], s=50,
+plt.scatter(final_map["end"][0], final_map["end"][1], s=100,
             zorder=100, c='r', label="End: " + str(final_map["end"]))
 
 # Draw legend
 plt.legend(loc='best')
-plt.xlabel('Lon')
-plt.ylabel('Lat')
+# plt.xlabel('Longitude: Seconds', fontsize=15)
+# plt.ylabel('Latitude: Seconds', fontsize=15)
 # make it a square
 ax.set_aspect('equal', 'box')
 # Save to a file, I hated having 20+ python windows open
