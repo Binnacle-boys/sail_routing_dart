@@ -28,8 +28,8 @@ Future main (List<String> arguments) async {
     print(plot.angleDifference(340.0, 10.0));
 
     double windSpeed = 6.0;
-    double idealHeading = 0.0;
-    double windHeading = 180.0;
+    double idealHeading = 60.0;
+    double windHeading = 45.0;
     print("Wind speed: ${windSpeed}, Wind Dir: ${windHeading}, Ideal Heading: ${idealHeading}...Optimal: ");
     print(plot.getOptimalAngle(idealHeading, windHeading, windSpeed));
         

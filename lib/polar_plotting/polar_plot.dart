@@ -79,9 +79,14 @@ class PolarPlot {
     // Getting relative plot angle
     double optimalPlotAngle =_bestAngle(plotIdeal.abs(), windSpeed);
     print("Optimal plot angle: ${optimalPlotAngle}");
+    
     //Reverses plot transform
+    double optmalDiff =optimalPlotAngle - plotIdeal.abs();
     double optimalAngle = 
-      (optimalPlotAngle + direction * (windDirection + 180)) % 360;
+      (direction  * optmalDiff + idealDirection) % 360;
+    
+    //double optimalAngle = 
+    //  (optimalPlotAngle + direction * (windDirection + 180)) % 360;
     return optimalAngle;
   }
 
