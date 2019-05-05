@@ -9,6 +9,8 @@ dependencies:
     test: ^1.6.2
     csv: ^4.0.3
     args: ^1.5.1
+    quiver: ^2.0.3
+
 
 environment:
   sdk: '>=1.0.0 <3.0.0'
