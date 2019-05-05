@@ -11,5 +11,22 @@ Future main (List<String> arguments) async {
     var plot = PolarPlot();
     await plot.init(arguments[0]);
     plot.hello();
+    print("Generated hash map from csv: ");
+    plot.printMap();
+    print("Angles: ");
+    plot.printAngles();
+    print("Wind speeds: ");
+    plot.printWindSpeeds();
+
+    print("270 - 360:");
+    print(plot.angleDifference(360.0, 270.0));
+    print("20 - 90");
+    print(plot.angleDifference(90.0, 20.0));
+    print("90 - 20");
+    print(plot.angleDifference(20.0, 90.0));
+    print("10 - 340");
+    print(plot.angleDifference(340.0, 10.0));
+        
+
     
 }
