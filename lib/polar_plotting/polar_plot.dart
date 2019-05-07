@@ -58,6 +58,23 @@ class PolarPlot {
     }
     return tightestAngle;
   }
+
+  /// Checks if the attempted direction is in nogo zone.
+  /// Arguments:
+  ///   (double) direction - Desired heading in compass bearing degrees
+  ///   (double) windDirection - Wind direction in compass bearing degrees
+  ///   (double) windSpeed - Wind speed in knots
+  /// Returns:
+  ///   (bool) : True = Sailing in nogo zone, False = Not sailing in nogo zone
+  bool inNogoZone(double direction, double windDirection, double windSpeed) {
+    double closestHeading = tightestHeading(windSpeed);
+    if (closestHeading == double.infinity) {
+      throw Iterable.empty();
+    }
+    double plotAngle =angleDifference((windDirection + 180) % 360, direction);
+    return (plotAngle.abs() < closestHeading.abs());
+  }
+
   /// Gets angle difference while retaining sign (rotation direction)
   /// returns secondAngle - firstAngle
   /// Compass Bearing Mapping - Positive => Clockwise
@@ -76,6 +93,10 @@ class PolarPlot {
 
   /// Gets the wind speed in the plot data that is closest to 
   /// the actual wind speed.
+  /// Arguments:
+  ///   (double) realWindSpeed - True wind speed in knots
+  /// Returns:
+  ///   (double) closest valued wind speed in knots that is recorded in polar plot.
   double closestWindSpeed(double realWindSpeed) {
     double closestMatch = _windSpeeds.first;
     for (double x in _windSpeeds) {
@@ -88,8 +109,18 @@ class PolarPlot {
     return closestMatch;
   }
 
+  /// Gets optimal angle for going in the desired direction. Transforms 
+  /// direction in to plot space to calculate the vmg. Then transforms back 
+  /// to return the plot optimal absolute compass bearing. 
+  /// **Note: Only capable of returning an angle that is recorded in the plot.
+  /// Arguments:
+  ///   (double) idealDirection - Desired dirction in degrees of compass bearing
+  ///   (double) windDirection - Wind direction in degrees of compass bearing
+  ///   (double) windSpeed - Wind speed in knots
+  /// Returns:
+  ///   (double) Absolute optimal angle in defrees of compass bearing
   double getOptimalAngle (double idealDirection, double windDirection, double windSpeed) {
-    double plotIdeal =angleDifference(
+    double plotIdeal = angleDifference(
         idealDirection, (windDirection + 180) % 360);
     print("Plot ideal: ${plotIdeal}");
     double direction = 1;
@@ -97,16 +128,14 @@ class PolarPlot {
       direction = -1;
     }
     // Getting relative plot angle
-    double optimalPlotAngle =_bestAngle(plotIdeal.abs(), windSpeed);
+    double optimalPlotAngle = _bestAngle(plotIdeal.abs(), windSpeed);
     print("Optimal plot angle: ${optimalPlotAngle}");
     
     //Reverses plot transform
-    double optmalDiff =optimalPlotAngle - plotIdeal.abs();
+    double optmalDiff = optimalPlotAngle - plotIdeal.abs();
     double optimalAngle = 
       (direction  * optmalDiff + idealDirection) % 360;
     
-    //double optimalAngle = 
-    //  (optimalPlotAngle + direction * (windDirection + 180)) % 360;
     return optimalAngle;
   }
 

@@ -34,7 +34,14 @@ Future main (List<String> arguments) async {
     print(plot.getOptimalAngle(idealHeading, windHeading, windSpeed));
     print("tighestAngle of wind speed ${windSpeed}: ");
     print(plot.tightestHeading(windSpeed));
-        
+    double idealHeading2 = 0.0;
+    double windHeading2 = 90.0;
+    print("In no go zone? ${idealHeading2}, ${windHeading2}: ");
+    print(plot.inNogoZone(idealHeading2, windHeading2, windSpeed));
+    idealHeading2 = 0.0;
+    windHeading2 = 180.0;
+    print("In no go zone? ${idealHeading2}, ${windHeading2}: ");
+    print(plot.inNogoZone(idealHeading2, windHeading2, windSpeed));
 
     
 }
