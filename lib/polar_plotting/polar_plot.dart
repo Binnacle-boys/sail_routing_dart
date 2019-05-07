@@ -38,6 +38,26 @@ class PolarPlot {
     print(_angles);
   }
 
+  /// Finds closest heading angle to the wind. 
+  /// Arguments:
+  ///   (double) windSpeed - Speed of th wind in knots
+  /// Returns:
+  ///   Tightest angle to the wind in degrees
+  /// Notes:
+  ///   - Returns double.infinity if no angles in set
+  double tightestHeading(double windSpeed) {
+    // Gets closest wind speed and sets tightest angle to infinity
+    double plotWind =closestWindSpeed(windSpeed);
+    double tightestAngle = double.infinity;
+
+    for (double currentAngle in _angles) {
+      if (_plot[currentAngle][plotWind] != 0 
+        && currentAngle < tightestAngle) {
+          tightestAngle = currentAngle;
+      }
+    }
+    return tightestAngle;
+  }
   /// Gets angle difference while retaining sign (rotation direction)
   /// returns secondAngle - firstAngle
   /// Compass Bearing Mapping - Positive => Clockwise

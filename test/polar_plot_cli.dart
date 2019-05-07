@@ -32,6 +32,8 @@ Future main (List<String> arguments) async {
     double windHeading = 45.0;
     print("Wind speed: ${windSpeed}, Wind Dir: ${windHeading}, Ideal Heading: ${idealHeading}...Optimal: ");
     print(plot.getOptimalAngle(idealHeading, windHeading, windSpeed));
+    print("tighestAngle of wind speed ${windSpeed}: ");
+    print(plot.tightestHeading(windSpeed));
         
 
     
