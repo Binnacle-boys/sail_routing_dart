@@ -6,11 +6,7 @@ import 'package:sail_routing_dart/cart_point.dart';
 import 'package:sail_routing_dart/route_model.dart';
 
 class RouteWriter {
-  writeToFile(
-      {List<double> start,
-      List<double> end,
-      List<List<double>> points,
-      double wind_direction}) {
+  writeToFile({List<double> start, List<double> end, List<List<double>> points, double wind_direction}) {
     List fileContents = new List();
     fileContents.add({'start': start});
 
@@ -33,10 +29,7 @@ class RouteWriter {
     fileContents.add({'end': route.end.toList()});
     fileContents.add({'wind_direction': route.wind_radians});
 
-    fileContents.add({
-      'points':
-          route.intermediate_points.map((Cart_Point p) => p.toList()).toList()
-    });
+    fileContents.add({'points': route.intermediate_points.map((CartPoint p) => p.toList()).toList()});
 
     var myFile = new File('lib/plotter_data.json');
 
@@ -61,8 +54,7 @@ class RouteWriter {
       m[x] = x;
       l.add([(x * Random.secure().nextDouble()) % 100, x]);
     }
-    writeToFile(
-        start: [0.0, 1.0], end: [1.0, 10.0], points: l, wind_direction: 30.0);
+    writeToFile(start: [0.0, 1.0], end: [1.0, 10.0], points: l, wind_direction: 30.0);
     run_python_plotter();
   }
 }

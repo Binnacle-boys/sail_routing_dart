@@ -1,9 +1,9 @@
 import 'dart:math';
 
-class Cart_Point {
+class CartPoint {
   double _x;
   double _y;
-  Cart_Point(this._x, this._y);
+  CartPoint(this._x, this._y);
   @override
   toString() {
     return ("x: " + this._x.toString() + "\ty: " + this._y.toString());
@@ -19,7 +19,7 @@ class Cart_Point {
     return output;
   }
 
-  Cart_Point.fromPoint(Point p) {
+  CartPoint.fromPoint(Point p) {
     this._x = p.x;
     this._y = p.y;
   }
