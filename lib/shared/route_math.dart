@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:vector_math/vector_math.dart';
+
 
 List<double> findIntersection(
   List<double> p1,
@@ -32,7 +34,7 @@ double cardinalTransform(double angle) {
 }
 
 double radiansToCardinal(double rads) {
-  return cardinalTransform(rads);
+  return cardinalTransform(radToDeg(rads));
 }
 
 double degToRad(double degrees) {
@@ -57,4 +59,13 @@ double angleDifference(firstAngle, secondAngle) {
     difference -= 360;
   }
   return difference;
+}
+
+Vector2 polarDegVector(double degrees) {
+  double rads = degToRad(degrees);
+  return polarRadVector(rads);
+}
+
+Vector2 polarRadVector(double rads) {
+  return Vector2(cos(rads), sin(rads));
 }
