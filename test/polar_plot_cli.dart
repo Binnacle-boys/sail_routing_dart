@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:sail_routing_dart/polar_plotting/polar_plot.dart';
 import 'package:sail_routing_dart/polar_algs/polar_router.dart';
-import 'package:sail_routing_dart/grapher.dart';
+import 'package:sail_routing_dart/route_writer.dart';
 
 Future main (List<String> arguments) async {
     exitCode = 0;
@@ -45,10 +45,11 @@ Future main (List<String> arguments) async {
     print("In no go zone? ${idealHeading2}, ${windHeading2}: ");
     print(plot.inNogoZone(idealHeading2, windHeading2, windSpeed));
 
-    PolarRouter pr =PolarRouter(plot);
+    PolarRouter pr = PolarRouter(plot);
     List<List<double>> route = pr.getTransRoute([0.0, 0.0], [0.0, 10.0], windSpeed, 180.0);
     RouteWriter rW = RouteWriter();
     rW.writeToFile(
       start: route.first, end: route.last, points: route, wind_direction: 180.0);
+    rW.run_python_plotter();
     
 }

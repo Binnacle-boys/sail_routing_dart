@@ -1,6 +1,5 @@
 library sail_routing_dart;
 
-import 'package:sail_routing_dart/grapher.dart';
 import 'dart:math';
 
 import 'package:sail_routing_dart/cart_point.dart';

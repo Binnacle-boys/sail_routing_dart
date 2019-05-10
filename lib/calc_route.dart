@@ -12,7 +12,6 @@ void main(List<String> args) {
   parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
   var results = parser.parse(args);
   v_flag = results['verbose'];
-  Car$1$2oint
 
   CartPoint start = new CartPoint(0.0, 0.0);
   CartPoint end = new CartPoint(1.0, -10.2);
