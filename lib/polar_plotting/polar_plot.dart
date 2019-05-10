@@ -132,7 +132,7 @@ class PolarPlot {
     print("Optimal plot angle: ${optimalPlotAngle}");
     
     //Reverses plot transform
-    double optmalDiff = optimalPlotAngle - plotIdeal.abs();
+    double optmalDiff =  plotIdeal.abs() - optimalPlotAngle;
     double optimalAngle = 
       (direction  * optmalDiff + idealDirection) % 360;
     
