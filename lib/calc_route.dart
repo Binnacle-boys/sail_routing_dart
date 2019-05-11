@@ -7,24 +7,24 @@ import 'package:sail_routing_dart/route_writer.dart';
 
 bool v_flag = false;
 
-void main(List<String> args) {
-  var parser = new ArgParser();
-  parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
-  var results = parser.parse(args);
-  v_flag = results['verbose'];
+// void main(List<String> args) {
+//  var parser = new ArgParser();
+//  parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
+//  var results = parser.parse(args);
+//  v_flag = results['verbose'];
 
-  Vector2 start = new Vector2(0.0, 0.0);
-  Vector2 end = new Vector2(1.0, -10.2);
-  double wind = 3 * pi / 2;
-  RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
+//  Vector2 start = new Vector2(0.0, 0.0);
+//  Vector2 end = new Vector2(1.0, -10.2);
+//  double wind = 3 * pi / 2;
+//  RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
 
-  calculateOptimal(route);
-  print(route);
+//  calculateOptimal(route);
+//  print(route);
 
-  RouteWriter rw = new RouteWriter();
-  rw.writeToFileFromRouteModel(route: route);
-  rw.run_python_plotter();
-}
+//  RouteWriter rw = new RouteWriter();
+//  rw.writeToFileFromRouteModel(route: route);
+//  rw.run_python_plotter();
+//}
 
 double euc_dist(Vector2 a, Vector2 b) {
   return a.distanceTo(b);
