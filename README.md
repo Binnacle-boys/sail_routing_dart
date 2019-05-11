@@ -42,7 +42,10 @@ This process uses polar plots of sail boats to obtain the optimal sailing route 
 A number of sail boats use polar plots to determine a boat's speed in respect to wind speed and direction. CSVs are used to generate a polar plot object in order to determine optimal headings. A sample CSV file is contained in the assets folder of the library and this file is sourced from here: http://jieter.github.io/orc-data/site/csvplot.html
 To construct a polar plot object use the following code:
 ```dart
-PolarPlot plot = PolarPlot("path/to/csvfile.csv");
+PolarPlot plot = PolarPlot();
+
+// Must be initialized as it is an async process
+await plot.init("path/to/csvfile.csv");
 ```
 This PolarPlot class can give the optimal heading given windDirection, desiredDirection and windSpeed:
 ```dart
