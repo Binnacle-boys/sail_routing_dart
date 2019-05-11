@@ -1,26 +1,26 @@
 import 'dart:core';
 import 'package:sail_routing_dart/calc_route.dart';
-import 'package:sail_routing_dart/cart_point.dart';
+import 'package:vector_math/vector_math.dart';
 
 class RouteModel {
-  CartPoint _start;
-  CartPoint _end;
-  List<CartPoint> _intermediate_points;
+  Vector2 _start;
+  Vector2 _end;
+  List<Vector2> _intermediate_points;
   double _wind_radians;
 
   // Getters
-  CartPoint get start => this._start;
-  CartPoint get end => this._end;
-  List<CartPoint> get intermediate_points => this._intermediate_points;
+  Vector2 get start => this._start;
+  Vector2 get end => this._end;
+  List<Vector2> get intermediate_points => this._intermediate_points;
   double get wind_radians => this._wind_radians;
 
-  void set intermediate_points(List<CartPoint> l) => this._intermediate_points = l;
+  void set intermediate_points(List<Vector2> l) => this._intermediate_points = l;
 
-  RouteModel({CartPoint start, CartPoint end, double wind_radians}) {
+  RouteModel({Vector2 start, Vector2 end, double wind_radians}) {
     this._start = start;
 
     this._end = end;
-    this._intermediate_points = new List<CartPoint>();
+    this._intermediate_points = new List<Vector2>();
     this._wind_radians = wind_radians;
     calculateOptimal(this);
   }
