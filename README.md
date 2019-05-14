@@ -1,15 +1,15 @@
 ## Running From Flutter ##
 First import the required files with:
 ```dart
-import 'package:sail_routing_dart/route.dart';
-import 'package:sail_routing_dart/cart_point.dart';
+import 'package:sail_routing_dart/route_model.dart';
+import 'package:vector_math/vector_math.dart';
 ```
 This will give you the data types you need.\\
 #### Calculating Routes ####
 To calculate a route, first we need to create a route. The constructor should giv you hints but heres an example:
 ```dart
-  CartPoint start = new CartPoint(0.0, 0.0);
-  CartPoint end = new CartPoint(1.0, -10.2);
+  Vector2 start = new Vector2(0.0, 0.0);
+  Vector2 end = new Vector2(1.0, -10.2);
   double wind = 3 * pi / 2;
   RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
 ```
@@ -28,7 +28,6 @@ The constructor will take care of the rest. To see the route it calculated, add 
 
 
 ## Single Tack Routing ##
-#### String whoToBlame() => 'Daniel'; ####
 Run the single tack implementation of the algorithm on a hard-coded route with:
 ```bash
 dart lib/calc_route.dart -v
@@ -40,6 +39,14 @@ The route will be displayed in `lib/plotted_course.png`
 This process uses polar plots of sail boats to obtain the optimal sailing route based on a polar plot, wind speed and direction. 
 ### Polar Plot ###
 A number of sail boats use polar plots to determine a boat's speed in respect to wind speed and direction. CSVs are used to generate a polar plot object in order to determine optimal headings. A sample CSV file is contained in the assets folder of the library and this file is sourced from here: http://jieter.github.io/orc-data/site/csvplot.html
+
+Inside the CSV files the columns are described as follows:
+
+twa/tws - The relative angle from the wind that the row corresponds to.
+6,8,10,12,14,16,20 - Each one of these columns is labeled as a separate wind speed in knots. And the column's value represents the boat's speed a that wind speed. 
+
+For example one row in the CSV file has the first column representing its relative wind angle. The following columns represent the boat's speed with that angle and wind speed. 
+
 To construct a polar plot object use the following code:
 ```dart
 PolarPlot plot = PolarPlot();
