@@ -7,24 +7,24 @@ import 'package:sail_routing_dart/route_writer.dart';
 
 bool v_flag = false;
 
-// void main(List<String> args) {
-//  var parser = new ArgParser();
-//  parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
-//  var results = parser.parse(args);
-//  v_flag = results['verbose'];
+void main(List<String> args) {
+ var parser = new ArgParser();
+ parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
+ var results = parser.parse(args);
+ v_flag = results['verbose'];
 
-//  Vector2 start = new Vector2(0.0, 0.0);
-//  Vector2 end = new Vector2(1.0, -10.2);
-//  double wind = 3 * pi / 2;
-//  RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
+ Vector2 start = new Vector2(0.0, 0.0);
+ Vector2 end = new Vector2(1.0, -10.2);
+ double wind = 3 * pi / 2;
+ RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
 
-//  calculateOptimal(route);
-//  print(route);
+ calculateOptimal(route);
+ print(route);
 
-//  RouteWriter rw = new RouteWriter();
-//  rw.writeToFileFromRouteModel(route: route);
-//  rw.run_python_plotter();
-//}
+ RouteWriter rw = new RouteWriter();
+ rw.writeToFileFromRouteModel(route: route);
+ rw.run_python_plotter();
+}
 
 double euc_dist(Vector2 a, Vector2 b) {
   return a.distanceTo(b);
@@ -59,17 +59,15 @@ Vector2 find_intersection(Vector2 a_point, Vector2 b_point, Vector2 c_point, Vec
     return new Vector2(x, y);
   }
 }
-
+/// check_viable_tack just checks if a tack from p1 -> p2 is makable (not directly upwind).
+///   Args:
+///     p1 (Vector2): Cartesian coordinates of start
+///     p2 (Vector2): Cartesian coordinates of end
+///     wind_radians (double): wind direction 
+/// Returns:
+///     bool
 bool check_viable_tack(Vector2 p1, Vector2 p2, double wind_radians) {
-  /*
-    check_viable_tack just checks if a tack from p1 -> p2 is makable (not directly upwind).
-    Args:
-        p1 (Vector2): Cartesian coordinates of start
-        p2 (Vector2): Cartesian coordinates of end
-        wind_radians (double): wind direction 
-    Returns:
-        bool
-  */
+
   double no_go_limit_radians = 0.610865; // Equivilant to 35 degrees
 
   double ngzone_upper_bound = (wind_radians + no_go_limit_radians);
@@ -78,7 +76,7 @@ bool check_viable_tack(Vector2 p1, Vector2 p2, double wind_radians) {
   Vector2 delta = p2 - p1;
   double tack_angle = atan2(delta.y, delta.x);
   verbosePrint("pot viable tack: " + radToDegStr(tack_angle));
-  // arctan gives values fro [-pi, pi]
+  // arctan2 gives values from [-pi, pi]
   if (tack_angle < 0) {
     tack_angle += 2 * pi;
   }
