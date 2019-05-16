@@ -2,8 +2,10 @@
 /// Algorithm class that gets a route based on a polar plot
 import 'package:sail_routing_dart/polar_plotting/polar_plot.dart';
 import 'package:sail_routing_dart/shared/route_math.dart';
+import 'dart:developer' as dev;
 import 'dart:math';
 import 'package:vector_math/vector_math.dart';
+// May want to tweak depending on what works best for optimal minimum difference
 const  minDiff = 10.0;
 class PolarRouter {
   
@@ -43,11 +45,11 @@ class PolarRouter {
     double desiredDiff = angleDifference(vmgDirection, desiredDirection).abs();
     bool desiredPossible = ! _polarPlot.inNogoZone(desiredDirection, windDirection, windSpeed);
     if (desiredDiff > minDiff || !desiredPossible) {
-      print("Should tack...");
-      print("vmg direction: ${vmgDirection}");
-      print("desiredDirection: ${desiredDirection}");
-      print("Desired Difference: ${desiredDiff} ");
-      print("DesiredPossible = ${desiredPossible}");
+      dev.log("Should tack...");
+      dev.log("vmg direction: ${vmgDirection}");
+      dev.log("desiredDirection: ${desiredDirection}");
+      dev.log("Desired Difference: ${desiredDiff} ");
+      dev.log("DesiredPossible = ${desiredPossible}");
       // Case: Should tack
       // Construct vectors
       Vector2 startVec = Vector2(start[0], start[1]);

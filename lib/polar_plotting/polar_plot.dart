@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:collection';
 import 'package:quiver/iterables.dart';
+import 'package:sail_routing_dart/shared/route_math.dart';
 // Polar plot class generated through csv polar plot files
 class PolarPlot {
 
@@ -73,22 +74,6 @@ class PolarPlot {
     }
     double plotAngle =angleDifference((windDirection + 180) % 360, direction);
     return (plotAngle.abs() < closestHeading.abs());
-  }
-
-  /// Gets angle difference while retaining sign (rotation direction)
-  /// returns secondAngle - firstAngle
-  /// Compass Bearing Mapping - Positive => Clockwise
-  /// Unit Circle Standard - Positive => Counterclockwise
-  /// This may need to be added to some helper function class
-  double angleDifference(firstAngle, secondAngle) {
-    double difference = secondAngle - firstAngle;
-    while (difference < -180) {
-      difference += 360;
-    }
-    while (difference > 180) {
-      difference -= 360;
-    }
-    return difference;
   }
 
   /// Gets the wind speed in the plot data that is closest to 

@@ -91,7 +91,7 @@ double radToDeg(double rads) {
 /// returns secondAngle - firstAngle
 /// Compass Bearing Mapping - Positive => Clockwise
 /// Unit Circle Standard - Positive => Counterclockwise
-/// This may need to be added to some helper function class
+/// Note: Doesn't use modulus as to retain the sign of the angle
 double angleDifference(firstAngle, secondAngle) {
   double difference = secondAngle - firstAngle;
   while (difference < -180) {
