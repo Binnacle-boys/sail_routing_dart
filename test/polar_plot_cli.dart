@@ -13,7 +13,6 @@ Future main (List<String> arguments) async {
     }
     var plot = PolarPlot();
     await plot.init(arguments[0]);
-    plot.hello();
     print("Generated hash map from csv: ");
     plot.printMap();
     print("Angles: ");

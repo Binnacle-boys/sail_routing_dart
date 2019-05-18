@@ -166,7 +166,7 @@ class PolarPlot {
       double vmgDiff = angleDifference(vmg, idealAngle);
 
       double currentCos = cos(_angleToRadians(currentDiff));
-      double vmgCos =cos(_angleToRadians(vmgDiff));
+      double vmgCos = cos(_angleToRadians(vmgDiff));
       // Multiplies vector with cosine of angles to evaluate
       // Vector with highest magnitude in ideal direction
       if (currentCos * _plot[currentAngle][plotWind] > vmgCos * _plot[vmg][plotWind]) {
@@ -179,8 +179,5 @@ class PolarPlot {
 
   double _angleToRadians(double degrees) {
     return degrees * pi / 180.0;
-  }
-  void hello() {
-    print("Working");
   }
 }
