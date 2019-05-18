@@ -1,33 +1,32 @@
 import 'dart:math';
 import 'package:args/args.dart';
-import 'cart_point.dart';
 import 'route_model.dart';
-
+import 'package:vector_math/vector_math.dart';
 import 'package:sail_routing_dart/route_writer.dart';
 
 bool v_flag = false;
 
-// void main(List<String> args) {
-//   var parser = new ArgParser();
-//   parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
-//   var results = parser.parse(args);
-//   v_flag = results['verbose'];
+void main(List<String> args) {
+ var parser = new ArgParser();
+ parser.addFlag("verbose", abbr: 'v', defaultsTo: false);
+ var results = parser.parse(args);
+ v_flag = results['verbose'];
 
-//   CartPoint start = new CartPoint(0.0, 0.0);
-//   CartPoint end = new CartPoint(1.0, -10.2);
-//   double wind = 3 * pi / 2;
-//   RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
+ Vector2 start = new Vector2(0.0, 0.0);
+ Vector2 end = new Vector2(1.0, -10.2);
+ double wind = 3 * pi / 2;
+ RouteModel route = new RouteModel(start: start, end: end, wind_radians: wind);
 
-//   calculateOptimal(route);
-//   print(route);
+ calculateOptimal(route);
+ print(route);
 
-//   RouteWriter rw = new RouteWriter();
-//   rw.writeToFileFromRouteModel(route: route);
-//   rw.run_python_plotter();
-// }
+ RouteWriter rw = new RouteWriter();
+ rw.writeToFileFromRouteModel(route: route);
+ rw.run_python_plotter();
+}
 
-double euc_dist(CartPoint a, CartPoint b) {
-  return a.toPoint().distanceTo(b.toPoint());
+double euc_dist(Vector2 a, Vector2 b) {
+  return a.distanceTo(b);
 }
 
 void verbosePrint(dynamic s) {
@@ -36,7 +35,7 @@ void verbosePrint(dynamic s) {
   }
 }
 
-CartPoint find_intersection(CartPoint a_point, CartPoint b_point, CartPoint c_point, CartPoint d_point) {
+Vector2 find_intersection(Vector2 a_point, Vector2 b_point, Vector2 c_point, Vector2 d_point) {
   double a1 = b_point.y - a_point.y;
   double b1 = a_point.x - b_point.x;
   double c1 = a1 * (a_point.x) + b1 * (a_point.y);
@@ -54,31 +53,29 @@ CartPoint find_intersection(CartPoint a_point, CartPoint b_point, CartPoint c_po
     double x = (b2 * c1 - b1 * c2) / determinant;
     double y = (a1 * c2 - a2 * c1) / determinant;
 
-    verbosePrint("intersection: " + CartPoint(x, y).toString());
+    verbosePrint("intersection: " + Vector2(x, y).toString());
 
-    return new CartPoint(x, y);
+    return new Vector2(x, y);
   }
 }
+/// check_viable_tack just checks if a tack from p1 -> p2 is makable (not directly upwind).
+///   Args:
+///     p1 (Vector2): Cartesian coordinates of start
+///     p2 (Vector2): Cartesian coordinates of end
+///     wind_radians (double): wind direction 
+/// Returns:
+///     bool
+bool check_viable_tack(Vector2 p1, Vector2 p2, double wind_radians) {
 
-bool check_viable_tack(CartPoint p1, CartPoint p2, double wind_radians) {
-  /*
-    check_viable_tack just checks if a tack from p1 -> p2 is makable (not directly upwind).
-    Args:
-        p1 (CartPoint): Cartesian coordinates of start
-        p2 (CartPoint): Cartesian coordinates of end
-        wind_radians (double): wind direction 
-    Returns:
-        bool
-  */
   double no_go_limit_radians = 0.610865; // Equivilant to 35 degrees
 
   double ngzone_upper_bound = (wind_radians + no_go_limit_radians);
   double ngzone_lower_bound = (wind_radians - no_go_limit_radians);
   verbosePrint("wind lower-upper: " + radToDegStr(ngzone_lower_bound) + " <-> " + radToDegStr(ngzone_upper_bound));
-  Point delta = p2.toPoint() - p1.toPoint();
+  Vector2 delta = p2 - p1;
   double tack_angle = atan2(delta.y, delta.x);
   verbosePrint("pot viable tack: " + radToDegStr(tack_angle));
-  // arctan gives values fro [-pi, pi]
+  // arctan2 gives values from [-pi, pi]
   if (tack_angle < 0) {
     tack_angle += 2 * pi;
   }
@@ -90,9 +87,9 @@ bool check_viable_tack(CartPoint p1, CartPoint p2, double wind_radians) {
 
 String radToDegStr(double radians) => (radians * 57.2958).toString();
 
-double bestTackAngle(CartPoint start, CartPoint goal, double wind_radians, bool invert_flag) {
+double bestTackAngle(Vector2 start, Vector2 goal, double wind_radians, bool invert_flag) {
   double no_go_limit_radians = 0.610865; // Equivilant to 35 degrees
-  Point delta = goal.toPoint() - start.toPoint();
+  Vector2 delta = goal - start;
   double impossible_tack = atan2(delta.y, delta.x);
   verbosePrint("imposs_tack  =  " + radToDegStr(impossible_tack));
   double ngzone_upper_bound = (wind_radians + no_go_limit_radians);
@@ -110,7 +107,7 @@ double bestTackAngle(CartPoint start, CartPoint goal, double wind_radians, bool 
 }
 
 calculateOptimal(RouteModel route) {
-  List intermediate_points = new List<CartPoint>();
+  List intermediate_points = new List<Vector2>();
   bool viable = check_viable_tack(route.start, route.end, route.wind_radians);
   if (!viable) {
     double best_tack_slope = bestTackAngle(route.start, route.end, route.wind_radians, false);
@@ -120,11 +117,11 @@ calculateOptimal(RouteModel route) {
     double inverse_tack_slope = bestTackAngle(route.end, route.start, route.wind_radians, true) + pi;
     verbosePrint("_INVERSE TACK " + radToDegStr(inverse_tack_slope));
 
-    CartPoint start2 = CartPoint.fromPoint(route.start.toPoint() + Point(cos(best_tack_slope), sin(best_tack_slope)));
-    CartPoint end2 = CartPoint.fromPoint(route.end.toPoint() + Point(cos(inverse_tack_slope), sin(inverse_tack_slope)));
+    Vector2 start2 = route.start + Vector2(cos(best_tack_slope), sin(best_tack_slope));
+    Vector2 end2 = route.end + Vector2(cos(inverse_tack_slope), sin(inverse_tack_slope));
 
     verbosePrint(end2);
-    CartPoint intersect = find_intersection(route.start, start2, route.end, end2);
+    Vector2 intersect = find_intersection(route.start, start2, route.end, end2);
 
     intermediate_points.add(start2);
     intermediate_points.add(intersect);
