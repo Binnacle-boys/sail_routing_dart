@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:args/args.dart';
 import 'route_model.dart';
-import 'package:sail_routing_dart/shared/route_math.dart';
 import 'package:vector_math/vector_math.dart';
 import 'package:sail_routing_dart/route_writer.dart';
 
