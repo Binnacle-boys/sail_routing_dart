@@ -6,11 +6,10 @@ author: Casey Hillers, Nicholas Kalscheuer, Daniel Richards, Donovan Rost, Willi
 homepage:
 
 dependencies:
-    test: ^1.6.2
     csv: ^4.0.3
     args: ^1.5.1
     quiver: 2.0.1
     vector_math: ^2.0.8
 
 environment:
-  sdk: '>=1.0.0 <3.0.0'
+  sdk: '>=2.0.0 <3.0.0'
