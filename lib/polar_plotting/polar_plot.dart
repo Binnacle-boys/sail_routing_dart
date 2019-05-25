@@ -17,14 +17,29 @@ class PolarPlot {
   /// a file from disk. Necessary before using the class,
   /// The constructor does not initialize private members.
   Future init (String filepath) async {
+    print("Initializing file!");
     final input = new File(filepath).openRead();
     _angles = Set<double>();
     _windSpeeds = Set<double>();
+    print("File opened for read!");
     // Don't like how this is a dynamic list, but don't know how to fix that yet
     var fields = await input.transform(utf8.decoder)
       .transform(new CsvToListConverter(fieldDelimiter: ";", eol: '\n', shouldParseNumbers: false))
       .toList();
     _mapInit(fields);
+    print("Done intializgin");
+  }
+
+  Future initStream (Stream<List<int>> input) async {
+    _angles = Set<double>();
+    _windSpeeds = Set<double>();
+    print("File opened for read!");
+    // Don't like how this is a dynamic list, but don't know how to fix that yet
+    var fields = await input.transform(utf8.decoder)
+      .transform(new CsvToListConverter(fieldDelimiter: ";", eol: '\n', shouldParseNumbers: false))
+      .toList();
+    _mapInit(fields);
+    print("Done intializgin");
   }
 
   void printMap() {
