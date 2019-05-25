@@ -30,14 +30,12 @@ class PolarPlot {
     print("Done intializgin");
   }
 
-  Future initStream (Stream<List<int>> input) async {
+  void initStream (String csv)  {
     _angles = Set<double>();
     _windSpeeds = Set<double>();
     print("File opened for read!");
     // Don't like how this is a dynamic list, but don't know how to fix that yet
-    var fields = await input.transform(utf8.decoder)
-      .transform(new CsvToListConverter(fieldDelimiter: ";", eol: '\n', shouldParseNumbers: false))
-      .toList();
+    var fields = const CsvToListConverter(fieldDelimiter: ";", eol: '\n', shouldParseNumbers: false).convert(csv);
     _mapInit(fields);
     print("Done intializgin");
   }
